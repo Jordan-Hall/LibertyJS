@@ -1,0 +1,1 @@
+export type HttpMethod = "Get" | "Post" | "Delete" | "Patch";

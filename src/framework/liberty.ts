@@ -1,35 +1,43 @@
 import { IServer } from './interface/I-server.ts';
 import { IHooks } from './hooks/interfaces/i-hooks.ts';
-import { LibertyHttp, libertyConnect } from './packages/http/interface/mod.ts';
+import {
+    LibertyHttp,
+    libertyConnect,
+    LibertyServerRouter,
+    HttpMethod
+} from './package.ts';
 
-interface LibertyServerCtor {
-    http: libertyConnect
-
+interface LibertyServerOptions {
+    http: libertyConnect<any>
+    router: LibertyServerRouter
 }
 
-export class LibertyServer extends AbortController implements IServer {
+export class LibertyServer<TBody> extends AbortController implements IServer {
     #_isOnline = false
-    #server: LibertyHttp | undefined = undefined;
+    #server: LibertyHttp<any> | undefined = undefined;
     #hooks: IHooks[] = [];
-    #httpConnect: libertyConnect;
+    #httpConnect: libertyConnect<TBody>;
+    #router: LibertyServerRouter;
 
-    constructor({ http }: LibertyServerCtor) {
+    constructor({ http, router }: LibertyServerOptions) {
         super();
         this.signal.addEventListener("abort", () => {
             this.close();
         })
-        this.#httpConnect = http; 
+        this.#httpConnect = http;
+        this.#router = router;
     }
 
     async listen(): Promise<void> {
-        const server: LibertyHttp =  this.#httpConnect({ hostName: '127.0.0.1.xip.io', port: 9000});
+        const server: LibertyHttp<TBody> =  this.#httpConnect({ hostname: '127.0.0.1.xip.io', port: 9000});
         this.#_isOnline = true;
         this.#server = server;
         console.log(`Server start in https://127.0.0.1.xip.io:9000`);
         
         for await (const request of server) {
-            console.log(server)
-            debugger;
+            console.log(server);
+            const matchedRoute = this.#router.matchRoute(request.url, request.method as HttpMethod);
+            console.log(matchedRoute);
         }
     }
     close(): boolean {
