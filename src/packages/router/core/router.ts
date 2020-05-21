@@ -1,21 +1,25 @@
-import { Routes } from "./interface/routes.ts";
+import { Route } from "./interface/routes.ts";
+import { pathToRegexp } from "./package.ts";
 
-export abstract class LibertyRouter {
-    #routes: Routes = [];
+export abstract class LibertyRouter<T extends Route> {
+    #routes: T[] = [];
 
     /**
      *
      */
-    constructor(routes: Routes) {
+    constructor(routes: T[]) {
         this.#routes = routes;
     }
 
     
-    matchRoute(url: string): Routes {
+    matchRoute(url: string): T |  T[] | undefined {
         return this.#routes.filter(route => {
-            route.path.
-            const replacePathWithRegex = url.match(route.path)
+            const regex = pathToRegexp(route.path);
+            return url.match(regex);
         })
     }
 
+    add(...routes: T[]) {
+        this.#routes.push(...routes)
+    }
 }

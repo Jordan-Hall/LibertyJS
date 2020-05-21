@@ -1,8 +1,7 @@
 export {
-    compile,
-    Key,
     parse as pathParse,
-    ParseOptions,
-    pathToRegexp,
-    TokensToRegexpOptions,
-  } from "https://raw.githubusercontent.com/pillarjs/path-to-regexp/v6.1.0/src/index.ts";
+    pathToRegexp
+} from "https://raw.githubusercontent.com/pillarjs/path-to-regexp/v6.1.0/src/index.ts";
+export {
+  HttpMethod
+} from "../../http/types/method.ts";

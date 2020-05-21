@@ -1,9 +1,9 @@
-export type SSLSetting {
+export type SSLSetting = {
     certFile: string,
     keyFile: string,
 }
 
-export type HttpSettings {
+export type HttpSettings = {
     hostname: string,
     port: number,
     SSL?: SSLSetting

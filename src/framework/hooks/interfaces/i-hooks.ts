@@ -1,12 +1,12 @@
-import { ServerRequest, Response } from "../../package.ts";
+import { HttpRequest } from "../../package.ts";
 
 export interface IHooksReturn {
-    serverRequest: ServerRequest,
+    serverRequest: HttpRequest<any>,
     response: Response
 }
 
 export interface IHooks {
-    pre(request: ServerRequest, response: Response): IHooksReturn;
-    post(request: ServerRequest, response: Response): IHooksReturn;
-    catch(request: ServerRequest, response: Response, error: any): IHooksReturn;
+    pre(request: HttpRequest<any>, response: Response): IHooksReturn;
+    post(request: HttpRequest<any>, response: Response): IHooksReturn;
+    catch(request: HttpRequest<any>, response: Response, error: any): IHooksReturn;
 }
