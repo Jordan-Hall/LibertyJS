@@ -1,0 +1,1 @@
+export { Storage, InMemoryCache } from '../storage/mod.ts';
