@@ -1,6 +1,6 @@
 import { IServer } from './interface/I-server.ts';
 import { IHooks } from './hooks/interfaces/i-hooks.ts';
-import { LibertyHttp, libertyConnect } from './packages/http/interface/mod.ts';
+import { LibertyHttp, libertyConnect } from './package.ts';
 
 interface LibertyServerCtor {
     http: libertyConnect
@@ -22,7 +22,7 @@ export class LibertyServer extends AbortController implements IServer {
     }
 
     async listen(): Promise<void> {
-        const server: LibertyHttp =  this.#httpConnect({ hostName: '127.0.0.1.xip.io', port: 9000});
+        const server: LibertyHttp =  this.#httpConnect({ hostname: '127.0.0.1.xip.io', port: 9000});
         this.#_isOnline = true;
         this.#server = server;
         console.log(`Server start in https://127.0.0.1.xip.io:9000`);

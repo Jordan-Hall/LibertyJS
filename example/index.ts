@@ -1,4 +1,4 @@
-import { LibertyServer } from '../src/liberty.ts';
+import { LibertyServer } from '../src/framework/mod.ts';
 import { denoConnect } from '../src/packages/http/deno/deno.connect.ts';
 
 const app = new LibertyServer({
